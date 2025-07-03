@@ -1,0 +1,25 @@
+<mvc:View controllerName="com.yedas.mm.demo.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Page id="page" title="{i18n>title}">
+      <content>
+            <VBox id="vb_first">
+                <HBox id="hb_first">
+                    <Label id="lb_PersName" required="true" text="Personel İsmi" class="sapUiTinyMarginTop" />
+                    <Input id="input_PersName" placeholder="Personel İsmi" width="300px" showValueHelp="true" class="sapUiTinyMarginBegin"/>
+                    <core:Icon id="id_Icon" src="sap-icon://employee-lookup" color="#64E4CE" class="sapUiTinyMarginBegin sapUiTinyMarginTop"/>
+                </HBox>
+                <HBox id="hb_second">
+                    <Label id="lb_PersSurName" required="true" text="Personel Soyisim" class="sapUiTinyMarginTop" />
+                    <Input id="input_PersSurName"  width="300px" showValueHelp="true" class="sapUiTinyMarginBegin"/>
+                </HBox>
+                <HBox>
+                    <Button id="btn_persAdd" text="Personel Ekle" icon="sap-icon://add-contact" type="Accept" enabled="true" press="onAddPers" />
+                    <Button id="btn_clear" text="Clear" type="Reject" enabled="true" press="onClear" class="sapUiTinyMarginBegin"/>
+                    <Button id="btn_popup" text="Popup'ta göster" type="Emphasized" enabled="true" press="onOpenPopup" class="sapUiTinyMarginBegin"/>
+                </HBox>
+                <Text id="txt_result"/>
+            </VBox>
+      </content>
+    </Page>
+</mvc:View>
