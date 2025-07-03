@@ -16,7 +16,6 @@
                 <HBox>
                     <Button id="btn_persAdd" text="Personel Ekle" icon="sap-icon://add-contact" type="Accept" enabled="true" press="onAddPers" />
                     <Button id="btn_clear" text="Clear" type="Reject" enabled="true" press="onClear" class="sapUiTinyMarginBegin"/>
-                    <Button id="btn_popup" text="Popup'ta göster" type="Emphasized" enabled="true" press="onOpenPopup" class="sapUiTinyMarginBegin"/>
                 </HBox>
                 <Text id="txt_result"/>
             </VBox>
