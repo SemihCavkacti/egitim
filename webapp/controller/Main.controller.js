@@ -9,6 +9,24 @@ function (Controller, MessageBox, MessageToast) {
     return Controller.extend("com.yedas.mm.demo.controller.Main", {
         //İlk çalışacak fonksiyon
         onInit: function () {
+
+            var data = {
+                    name    : "Semih",
+                    surName : "Çavkaçtı",
+                    city    : "İstanbul"   
+                }
+
+            var oData = {
+                        personel : [
+                            {name : "Name1", surName : "SurName1", city : "İstanbul"},
+                            {name : "Name2", surName : "SurName2", city : "Ankara"}
+                        ]
+            };
+
+            
+            var oModel = new sap.ui.model.json.JSONModel(data);
+            this.getView().setModel(oModel, "mainModel");
+
         },
         //View içerisindeki tasarımların henüz tarayıcıda yüklenmediği an
         onBeforeRendering : function(){
@@ -22,7 +40,17 @@ function (Controller, MessageBox, MessageToast) {
         onExit : function(){
         },
 
+        //Nesnelere  model ile erişim sağlandı.
+        onAddPers : function(){
+            var oModel = this.getView().getModel("mainModel");
+            var name = oModel.getProperty("/name");
+            var surName = oModel.getProperty("/surName");
 
+            oModel.setProperty("/result", name + " " + surName);
+        },
+
+        //Nesneler Id ile erişim sağlandı.
+        /* 
         onAddPers : function(){
            var oInputName = this.getView().byId("input_PersName");
            var oInputSurname = this.getView().byId("input_PersSurName");
@@ -30,13 +58,13 @@ function (Controller, MessageBox, MessageToast) {
            var sPersName = oInputName.getValue();
            var sPersSurName = oInputSurname.getValue();
 
-           //oInput.setDescription(sPersName + " " + "personel ismi.");
+           oInput.setDescription(sPersName + " " + "personel ismi.");
 
-           //MessageBox.show("Personel İsmi: " + sPersName);
+           MessageBox.show("Personel İsmi: " + sPersName);
 
            oText.setText(sPersName + sPersSurName);
         },
-
+        */
         onClear : function(){
             var oText = this.getView().byId("txt_result");
             oText.setText("");

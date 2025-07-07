@@ -1,11 +1,51 @@
 <mvc:View controllerName="com.yedas.mm.demo.controller.Main"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m" xmlns:core="sap.ui.core">
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core">
     <Page id="page" title="{i18n>title}">
     	<headerContent>
-        <Text text="Header Nesnesi"/>
+        <Text text="{i18n>HEADER}"/>
 		</headerContent>
         <content>
+        <f:SimpleForm id="SimpleFormChange354"
+			minWidth="1024"
+			maxContainerCols="2"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			title="Address"
+			labelSpanL="3"
+			labelSpanM="3"
+			emptySpanL="4"
+			emptySpanM="4"
+			columnsL="1"
+			columnsM="1"
+			class="editableForm">
+            <f:content>
+				<Label id="lb_PersName" required="false" text="{i18n>PERS_NAME}"/>
+				<Input id="input_PersName" value="{mainModel>/name}" width="300px" showValueHelp="false"/>
+                <Input value="{mainModel>/surName}" placeholder="{i18n>PERS_SURNAME}">
+					<layoutData>
+						<l:GridData span="L2 M2 S4" />
+					</layoutData>
+				</Input>
+				<Label text="{i18n>CITY}" />
+				<Select width="100%">
+					<items>
+						<core:Item text="İstanbul" />
+						<core:Item text="Ankara" />
+						<core:Item text="İzmir" />
+					</items>
+				</Select>
+                <Label text="Cinsiyet"/>
+                <HBox>
+                    <RadioButton groupName="GroupA" text="{i18n>}" selected="true"/>
+                    <RadioButton groupName="GroupA" text="Kadın" />
+                </HBox>
+                <Label text=""/>
+                <CheckBox text="{i18n>MESSAGE_INFO}"/>
+
+			</f:content>
+        </f:SimpleForm>
+        <!--
             <Panel id="sectionHeader" expandable="true" expanded="true" width="auto" class="sapUiResponsiveMargin">
             	<headerToolbar>
                     <Toolbar height="3rem">
@@ -24,7 +64,6 @@
                             <HBox id="hb_first">
                                 <Label id="lb_PersName" required="false" text="Personel İsmi" class="sapUiTinyMarginTop" />
                                 <Input id="input_PersName" placeholder="Personel İsmi" width="300px" showValueHelp="false" class="sapUiTinyMarginBegin"/>
-                                <!--<core:Icon id="id_Icon" src="sap-icon://employee-lookup" color="#64E4CE" class="sapUiTinyMarginBegin sapUiTinyMarginTop"/>-->
                             </HBox>
                             <HBox id="hb_second">
                                 <Label id="lb_PersSurName" required="true" text="Personel Soyisim" class="sapUiTinyMarginTop" />
@@ -33,23 +72,8 @@
                         </VBox>
 					</items>
 				</FlexBox>
-                <!--
-                <content>
-                    <VBox id="vb_first">
-                    <HBox id="hb_first">
-                        <Label id="lb_PersName" required="true" text="Personel İsmi" class="sapUiTinyMarginTop" />
-                        <Input id="input_PersName" placeholder="Personel İsmi" width="300px" showValueHelp="true" class="sapUiTinyMarginBegin"/>
-                        <core:Icon id="id_Icon" src="sap-icon://employee-lookup" color="#64E4CE" class="sapUiTinyMarginBegin sapUiTinyMarginTop"/>
-                    </HBox>
-                    <HBox id="hb_second">
-                        <Label id="lb_PersSurName" required="true" text="Personel Soyisim" class="sapUiTinyMarginTop" />
-                        <Input id="input_PersSurName"  width="300px" showValueHelp="true" class="sapUiTinyMarginBegin"/>
-                    </HBox>
-                    
-                </VBox>
-                </content>
-                -->
             </Panel>
+            -->
             <Panel id="sectionBody" width="auto" class="sapUiResponsiveMargin">
                 <headerToolbar>
                     <Toolbar height="3rem">
@@ -57,7 +81,7 @@
                     </Toolbar>
                 </headerToolbar>
                 <content>
-                   <Text id="txt_result"/>
+                   <Text id="txt_result" text="{mainModel>/result}"/>
                 </content>
             </Panel>
             <!--
@@ -82,8 +106,8 @@
       	<footer>
 			<Toolbar>
 				<ToolbarSpacer/>
-				<Button text="Onayla" type="Accept" />
-				<Button text="Reddet" type="Reject" />
+				<Button id="btn_persAdd" text="Personel Ekle" icon="sap-icon://add-contact" type="Accept" enabled="true" press="onAddPers" />
+				<Button id="btn_clear" text="Clear" type="Reject" enabled="true" press="onClear" class="sapUiTinyMarginBegin"/>
 			</Toolbar>
 		</footer>
     </Page>
