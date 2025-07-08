@@ -14,17 +14,19 @@ function (Controller, MessageBox, MessageToast) {
                     name    : "Semih",
                     surName : "Çavkaçtı",
                     city    : "İstanbul"   
-                }
+            }
+
 
             var oData = {
-                        personel : [
-                            {name : "Name1", surName : "SurName1", city : "İstanbul"},
-                            {name : "Name2", surName : "SurName2", city : "Ankara"}
-                        ]
-            };
+                products : [
+                        {name : "Laptop", price : 1000},
+                        {name : "Mouse",  price : 20},
+                        {name : "Keyboard", price : 45}
+                ]
+            }
 
             
-            var oModel = new sap.ui.model.json.JSONModel(data);
+            var oModel = new sap.ui.model.json.JSONModel(oData);
             this.getView().setModel(oModel, "mainModel");
 
         },

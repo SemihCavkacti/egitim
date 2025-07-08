@@ -77,11 +77,20 @@
             <Panel id="sectionBody" width="auto" class="sapUiResponsiveMargin">
                 <headerToolbar>
                     <Toolbar height="3rem">
-                        <Title text="Form Bilgileri"/>
+                        <Title text="{i18n>PRODUCT_LIST}"/>
                     </Toolbar>
                 </headerToolbar>
                 <content>
-                   <Text id="txt_result" text="{mainModel>/result}"/>
+                    <List headerText="{i18n>PRODUCTS}"
+                        mode="MultiSelect"
+                        growing="true"
+                        growingThreshold="5"
+                        growingScrollToLoad="false"
+                        items="{
+                                path: 'mainModel>/products'
+                    }">
+                        <StandardListItem title="{mainModel>name}" counter="{mainModel>price}"/>
+                    </List>
                 </content>
             </Panel>
             <!--
