@@ -19,15 +19,31 @@ function (Controller, MessageBox, MessageToast) {
 
             var oData = {
                 products : [
-                        {name : "Laptop", price : 1000},
-                        {name : "Mouse",  price : 20},
-                        {name : "Keyboard", price : 45}
-                ]
+                        {id: "10001",   serialNumber : "111111" , type : "PC",   name : "Laptop", dimension : "30x30x3",  price : 1000, unit: "$"},
+                        {id: "10002",   serialNumber : "111112", type : "PC",   name : "Mouse",  dimension : "10x5x3",   price : 48, unit: "$"},
+                        {id: "10003",   serialNumber : "111113" , type : "PC",   name : "Keyboard", dimension: "30x20x5", price : 51, unit: "$"},
+                        {id: "10004",   serialNumber : "111114" , type : "Cable", name : "HDMI",  dimension : "100x2x3",  price : 30, unit: "$"},
+                        {id: "10005",   serialNumber : "111115", type : "Cable", name : "DP", dimension: "100x2x5",      price : 35, unit: "$"},
+                        {id: "10006",   serialNumber : "111116" , type : "Cable", name : "DP", dimension: "100x2x5",      price : 35, unit: "$"}
+                ],
+                //count : 6
+                criticalStockInfo : 'Information'
             }
 
             
             var oModel = new sap.ui.model.json.JSONModel(oData);
             this.getView().setModel(oModel, "mainModel");
+
+            var listCount = this.getView().getModel("mainModel").getProperty("/products").length;
+ 
+            oModel.setProperty("/count", listCount);
+
+            if(listCount > 5) {
+                oModel.setProperty("/criticalStockInfo", "Information");
+            }
+            else if(listCount <= 5){
+                oModel.setProperty("/criticalStockInfo", "Error");
+            }
 
         },
         //View içerisindeki tasarımların henüz tarayıcıda yüklenmediği an
@@ -40,6 +56,17 @@ function (Controller, MessageBox, MessageToast) {
 
         //Uygulamadan çıkış yapıldığında bu fonksiyona gelir.
         onExit : function(){
+        },
+
+        //Tablodaki satıra tıklama fonksiyonu tetiklenir.
+        onSelectProduct : function(oEvent){
+             var oItem = oEvent.getParameter("listItem"); 
+             var oContenxt = oItem.getBindingContext("mainModel");
+             var data =  oContenxt.getObject();
+
+             var string = "Tıkladığınız" +data.id + " id olan ürün" + data.name +" ürünüdür."
+
+             MessageBox.show(string);
         },
 
         //Nesnelere  model ile erişim sağlandı.

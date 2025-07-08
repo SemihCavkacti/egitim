@@ -1,6 +1,6 @@
 <mvc:View controllerName="com.yedas.mm.demo.controller.Main"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:f="sap.ui.layout.form"
-    xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core">
+    xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:tnt="sap.tnt">
     <Page id="page" title="{i18n>title}">
     	<headerContent>
         <Text text="{i18n>HEADER}"/>
@@ -81,16 +81,61 @@
                     </Toolbar>
                 </headerToolbar>
                 <content>
-                    <List headerText="{i18n>PRODUCTS}"
-                        mode="MultiSelect"
-                        growing="true"
-                        growingThreshold="5"
-                        growingScrollToLoad="false"
-                        items="{
-                                path: 'mainModel>/products'
-                    }">
-                        <StandardListItem title="{mainModel>name}" counter="{mainModel>price}"/>
-                    </List>
+                	<MessageStrip
+                        text="{i18n>STOCK_INFO}"
+                        type="{mainModel>/criticalStockInfo}"
+                        showIcon="true">
+                    </MessageStrip>
+                   <Table id="idProductsTable"
+                            items="{path: 'mainModel>/products'}" 
+                            mode="SingleSelectMaster"
+                            itemPress="onSelectProduct">
+                    	<headerToolbar>
+                        <OverflowToolbar>
+                            <content>
+                                <Title text="{i18n>PRODUCTS}({mainModel>/count})" level="H2"/>
+                            </content>
+                        </OverflowToolbar>
+                        </headerToolbar>
+                        <infoToolbar>
+                            <OverflowToolbar>
+                                <Label text="{i18n>STOCK_INFO}"/>
+                            </OverflowToolbar>
+                        </infoToolbar>
+                        <columns>
+                            <Column>
+                                <Text text="{i18n>NAME}" />
+                            </Column>
+                             <Column demandPopin="true" minScreenWidth="Desktop">
+                                <Text text="{i18n>TYPE}" />
+                            </Column>
+                             <Column demandPopin="true" minScreenWidth="Desktop">
+                                <Text text="{i18n>DIMENSION}" />
+                            </Column>
+                            <Column demandPopin="true" minScreenWidth="Desktop">
+                                <Text text="{i18n>PRICE}" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem type="Active">
+                                <cells>
+                                    <ObjectIdentifier
+                                            title="{mainModel>name}"
+                                            text="{mainModel>id}"/>
+                                    <tnt:InfoLabel text="{mainModel>type}" renderMode="Narrow" colorScheme="{= ${mainModel>type} === 'PC' ? 1 : 2}"/>
+                                    <!--<Text text="{mainModel>type}" />-->
+                                    <Text text="{mainModel>dimension}" />
+                                    <ObjectNumber
+                                        number="{
+                                            parts:[{path:'mainModel>price'},{path:'mainModel>unit'}],
+                                            type: 'sap.ui.model.type.Currency',
+                                            formatOptions: {showMeasure: false}
+                                        }"
+                                        unit="{mainModel>unit}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                   </Table>
                 </content>
             </Panel>
             <!--
