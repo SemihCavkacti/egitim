@@ -45,6 +45,9 @@ function (Controller, MessageBox, MessageToast) {
                 oModel.setProperty("/criticalStockInfo", "Error");
             }
 
+
+            this.onAddPers("Default");
+
         },
         //View içerisindeki tasarımların henüz tarayıcıda yüklenmediği an
         onBeforeRendering : function(){
@@ -69,8 +72,16 @@ function (Controller, MessageBox, MessageToast) {
              MessageBox.show(string);
         },
 
+        onInputLiveChange : function(oEvent){
+            var oInputParam = oEvent.getParameter("newValue");
+            
+            if(oInputParam === "$" || oInputParam === "&"){
+                MessageToast.show("Özel karakter kullanmayınız!");
+            }
+        },
+
         //Nesnelere  model ile erişim sağlandı.
-        onAddPers : function(){
+        onAddPers : function(type){
             var oModel = this.getView().getModel("mainModel");
             var name = oModel.getProperty("/name");
             var surName = oModel.getProperty("/surName");

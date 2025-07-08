@@ -1,5 +1,5 @@
 <mvc:View controllerName="com.yedas.mm.demo.controller.Main"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:f="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:f="sap.ui.layout.form" xmlns:table="sap.ui.table"
     xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:tnt="sap.tnt">
     <Page id="page" title="{i18n>title}">
     	<headerContent>
@@ -21,7 +21,7 @@
 			class="editableForm">
             <f:content>
 				<Label id="lb_PersName" required="false" text="{i18n>PERS_NAME}"/>
-				<Input id="input_PersName" value="{mainModel>/name}" width="300px" showValueHelp="false"/>
+				<Input id="input_PersName" liveChange="onInputLiveChange" value="{mainModel>/name}" width="300px" showValueHelp="false"/>
                 <Input value="{mainModel>/surName}" placeholder="{i18n>PERS_SURNAME}">
 					<layoutData>
 						<l:GridData span="L2 M2 S4" />
@@ -86,7 +86,38 @@
                         type="{mainModel>/criticalStockInfo}"
                         showIcon="true">
                     </MessageStrip>
-                   <Table id="idProductsTable"
+                    <table:Table
+                        rows="{mainModel>/products}"
+                        selectionMode="Single">
+                        <table:columns>
+                            <table:Column width="40%">
+                                <Label text="{i18n>NAME}"/>
+                                <table:template>
+                                    <Text text="{mainModel>name}" wrapping="false" />
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="20%">
+                                <Label text="{i18n>TYPE}"/>
+                                <table:template>
+                                    <Text text="{mainModel>type}" wrapping="false" />
+                                </table:template>
+                            </table:Column>
+                             <table:Column width="25%">
+                                <Label text="{i18n>DIMENSION}"/>
+                                <table:template>
+                                    <Text text="{mainModel>dimension}" wrapping="false" />
+                                </table:template>
+                            </table:Column>
+                             <table:Column width="15%">
+                                <Label text="{i18n>PRICE}"/>
+                                <table:template>
+                                    <Text text="{mainModel>price}" wrapping="false" />
+                                </table:template>
+                            </table:Column>
+                        </table:columns>
+                    </table:Table>
+                    <!--
+                    <Table id="idProductsTable"
                             items="{path: 'mainModel>/products'}" 
                             mode="SingleSelectMaster"
                             itemPress="onSelectProduct">
@@ -123,7 +154,6 @@
                                             title="{mainModel>name}"
                                             text="{mainModel>id}"/>
                                     <tnt:InfoLabel text="{mainModel>type}" renderMode="Narrow" colorScheme="{= ${mainModel>type} === 'PC' ? 1 : 2}"/>
-                                    <!--<Text text="{mainModel>type}" />-->
                                     <Text text="{mainModel>dimension}" />
                                     <ObjectNumber
                                         number="{
@@ -136,6 +166,7 @@
                             </ColumnListItem>
                         </items>
                    </Table>
+                   -->
                 </content>
             </Panel>
             <!--
