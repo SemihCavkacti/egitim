@@ -1,12 +1,14 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
-    "sap/m/MessageToast"
+    "sap/m/MessageToast",
+    "com/yedas/mm/demo/model/Formatter"
 ],
-function (Controller, MessageBox, MessageToast) {
+function (Controller, MessageBox, MessageToast, Formatter) {
     "use strict";
 
     return Controller.extend("com.yedas.mm.demo.controller.Main", {
+        formatter : Formatter,
         //İlk çalışacak fonksiyon
         onInit: function () {
 
@@ -19,12 +21,12 @@ function (Controller, MessageBox, MessageToast) {
 
             var oData = {
                 products : [
-                        {id: "10001",   serialNumber : "111111" , type : "PC",   name : "Laptop", dimension : "30x30x3",  price : 1000, unit: "$"},
-                        {id: "10002",   serialNumber : "111112", type : "PC",   name : "Mouse",  dimension : "10x5x3",   price : 48, unit: "$"},
-                        {id: "10003",   serialNumber : "111113" , type : "PC",   name : "Keyboard", dimension: "30x20x5", price : 51, unit: "$"},
-                        {id: "10004",   serialNumber : "111114" , type : "Cable", name : "HDMI",  dimension : "100x2x3",  price : 30, unit: "$"},
-                        {id: "10005",   serialNumber : "111115", type : "Cable", name : "DP", dimension: "100x2x5",      price : 35, unit: "$"},
-                        {id: "10006",   serialNumber : "111116" , type : "Cable", name : "DP", dimension: "100x2x5",      price : 35, unit: "$"}
+                        {id: "10001",   serialNumber : "111111" , type : "PC",   name : "Laptop", dimension : "30x30x3",  price : 1000, unit: "$", stock : 1},
+                        {id: "10002",   serialNumber : "111112", type : "PC",   name : "Mouse",  dimension : "10x5x3",   price : 48, unit: "$", stock : 0},
+                        {id: "10003",   serialNumber : "111113" , type : "PC",   name : "Keyboard", dimension: "30x20x5", price : 51, unit: "$", stock : 1},
+                        {id: "10004",   serialNumber : "111114" , type : "Cable", name : "HDMI",  dimension : "100x2x3",  price : 30, unit: "$", stock : 0},
+                        {id: "10005",   serialNumber : "111115", type : "Cable", name : "DP", dimension: "100x2x5",      price : 35, unit: "$", stock : 1},
+                        {id: "10006",   serialNumber : "111116" , type : "Cable", name : "DP", dimension: "100x2x5",      price : 35, unit: "$", stock : 0}
                 ],
                 //count : 6
                 criticalStockInfo : 'Information'
