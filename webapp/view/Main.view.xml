@@ -20,13 +20,9 @@
 			columnsM="1"
 			class="editableForm">
             <f:content>
-				<Label id="lb_PersName" required="false" text="{i18n>PERS_NAME}"/>
-				<Input id="input_PersName" liveChange="onInputLiveChange" value="{mainModel>/name}" width="300px" showValueHelp="false"/>
-                <Input value="{mainModel>/surName}" placeholder="{i18n>PERS_SURNAME}">
-					<layoutData>
-						<l:GridData span="L2 M2 S4" />
-					</layoutData>
-				</Input>
+				<Label required="false" text="{i18n>PRODUCT_NAME}"/>
+				<Input liveChange="onInputLiveChange" value="{mainModel>/productName}" width="300px" showValueHelp="true" valueHelpRequest=".handleValueHelpRequest"/>
+                <!--
 				<Label text="{i18n>CITY}" />
 				<Select width="100%">
 					<items>
@@ -42,7 +38,7 @@
                 </HBox>
                 <Label text=""/>
                 <CheckBox text="{i18n>MESSAGE_INFO}"/>
-
+                -->
 			</f:content>
         </f:SimpleForm>
         <!--
@@ -180,7 +176,7 @@
                                         }"
                                         unit="{mainModel>unit}" />
                                     <ObjectStatus
-                                        text="{path:'mainModel>stock', formatter : 'com.yedas.mm.demo.model.Formatter.getType'}"
+                                        text="{path:'mainModel>stock', formatter : 'com.yedas.mm.demo.model.Formatter.getStock'}"
                                         icon="{= ${mainModel>stock} === 0 ? 'sap-icon://error' : 'sap-icon://sys-enter-2'}" 
                                         state="{path:'mainModel>stock', formatter : 'com.yedas.mm.demo.model.Formatter.getStockState'}" />
                                 </cells>
@@ -213,6 +209,7 @@
 				<ToolbarSpacer/>
 				<Button id="btn_persAdd" text="Personel Ekle" icon="sap-icon://add-contact" type="Accept" enabled="true" press="onAddPers" />
 				<Button id="btn_clear" text="Clear" type="Reject" enabled="true" press="onClear" class="sapUiTinyMarginBegin"/>
+                <Button id="btn_popup" text="{i18n>DIALOG}" type="Reject" enabled="true" press="onPopup" class="sapUiTinyMarginBegin"/>
 			</Toolbar>
 		</footer>
     </Page>

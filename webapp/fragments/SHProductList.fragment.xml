@@ -1,0 +1,19 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		id="mySelectDialog"
+		noDataText="No Products Found"
+		title="Select Product"
+		search=".onSearch"
+		confirm=".onDialogClose"
+		cancel=".onDialogClose"
+		items="{
+			path: 'mainModel>/products'
+		}">
+		<StandardListItem
+			title="{mainModel>id}"
+			description="{mainModel>name}"
+			type="Active" />
+	</SelectDialog>
+</core:FragmentDefinition>

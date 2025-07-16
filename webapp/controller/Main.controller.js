@@ -2,9 +2,11 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
-    "com/yedas/mm/demo/model/Formatter"
+    "com/yedas/mm/demo/model/Formatter",
+    "sap/m/Dialog",
+    "sap/m/ObjectIdentifier"
 ],
-function (Controller, MessageBox, MessageToast, Formatter) {
+function (Controller, MessageBox, MessageToast, Formatter, Dialog, ObjectIdentifier) {
     "use strict";
 
     return Controller.extend("com.yedas.mm.demo.controller.Main", {
@@ -49,6 +51,8 @@ function (Controller, MessageBox, MessageToast, Formatter) {
 
 
             this.onAddPers("Default");
+
+            Formatter.getCurrency(oData);
 
         },
         //View içerisindeki tasarımların henüz tarayıcıda yüklenmediği an
@@ -108,8 +112,81 @@ function (Controller, MessageBox, MessageToast, Formatter) {
         },
         */
         onClear : function(){
-            var oText = this.getView().byId("txt_result");
-            oText.setText("");
+            var that = this;
+            MessageBox.success("Form Temizlenecek. Emin misiniz ?", {
+                title : "İşlem Türü",
+                actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                emphasizedAction: MessageBox.Action.OK,
+                onClose: function (sAction) {
+					if(sAction == "OK") {
+                        that.onClearForm();
+                    }
+                    else {
+                        return;
+                    }
+
+				},
+                dependentOn: this.getView()
+
+            });
+
+            //var oText = this.getView().byId("txt_result");
+            //oText.setText("");
+        },
+
+        onClearForm : function(){
+            var oModel = this.getView().getModel("mainModel");
+                oModel.setProperty("/name" , "");
+                oModel.setProperty("/surName" , "");
+        },
+
+        onPopup : function(){
+
+
+            /*Dinamik olarak Dialog Nesnesi oluşturuldu.
+            if (!this.oDefaultDialog) {
+                this.oDefaultDialog = new Dialog({
+                    title : "Dialog",
+                    content : new ObjectIdentifier({title : "Dialog Title", text : "Dialog Text"}),
+                    beginButton: new sap.m.Button({
+						text: "OK",
+						press: function () {
+							this.oDefaultDialog.close();
+						}.bind(this)
+					}),
+					endButton: new sap.m.Button({
+						text: "Close",
+						press: function () {
+							this.oDefaultDialog.close();
+						}.bind(this)
+					})
+                });
+
+                this.getView().addDependent(this.oDefaultDialog);
+            }
+
+            
+            this.oDefaultDialog.open();
+
+            */
+        },
+
+        onDialogClose : function(oEvent){
+            var oModel = this.getView().getModel("mainModel"); 
+            var oItem = oEvent.getParameter("selectedItem");
+            var oContext = oItem.getBindingContext("mainModel").getObject();
+
+            oModel.setProperty("/productName", oContext.name);
+
+
+        },
+
+        handleValueHelpRequest : function(oEvent){
+            if (!this.oDialog) {
+                this.oDialog = sap.ui.xmlfragment("com.yedas.mm.demo.fragments.SHProductList", this);
+                this.getView().addDependent(this.oDialog);
+            }
+            this.oDialog.open();
         },
 
         /*
