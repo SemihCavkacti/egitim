@@ -1,0 +1,8 @@
+<mvc:View controllerName="com.yedas.mm.demo.controller.Detail"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Page id="detailPage" title="{i18n>detailTitle}">
+        <content>
+            <Text text="Detail Page"/>
+        </content>
+    </Page>
+</mvc:View>

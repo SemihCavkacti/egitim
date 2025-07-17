@@ -114,77 +114,28 @@
                         </table:columns>
                     </table:Table>
                     -->
-                    <Panel id="sectionBody" width="auto" class="sapUiResponsiveMargin">
-                        <headerToolbar>
-                            <Toolbar height="3rem">
-                                <Title text="{i18n>PRODUCT_LIST}"/>
-                            </Toolbar>
-                        </headerToolbar>
-                        <content>
-                	<MessageStrip
-                        text="{i18n>STOCK_INFO}"
-                        type="{mainModel>/criticalStockInfo}"
-                        showIcon="true">
-                    </MessageStrip>
-                    <Table id="idProductsTable"
-                            items="{path: 'mainModel>/products'}" 
-                            mode="SingleSelectMaster"
-                            itemPress="onSelectProduct">
-                    	<headerToolbar>
-                        <OverflowToolbar>
-                            <content>
-                                <Title text="{i18n>PRODUCTS}({mainModel>/count})" level="H2"/>
-                            </content>
-                        </OverflowToolbar>
-                        </headerToolbar>
-                        <infoToolbar>
-                            <OverflowToolbar>
-                                <Label text="{i18n>STOCK_INFO}"/>
-                            </OverflowToolbar>
-                        </infoToolbar>
-                        <columns>
-                            <Column>
-                                <Text text="{i18n>NAME}" />
-                            </Column>
-                             <Column demandPopin="true" minScreenWidth="Desktop">
-                                <Text text="{i18n>TYPE}" />
-                            </Column>
-                             <Column demandPopin="true" minScreenWidth="Desktop">
-                                <Text text="{i18n>DIMENSION}" />
-                            </Column>
-                            <Column demandPopin="true" minScreenWidth="Desktop">
-                                <Text text="{i18n>PRICE}" />
-                            </Column>
-                            <Column demandPopin="true" minScreenWidth="Desktop">
-                                <Text text="{i18n>STOCK}" />
-                            </Column>
-                        </columns>
-                        <items>
-                            <ColumnListItem type="Active">
-                                <cells>
-                                    <ObjectIdentifier
-                                            title="{mainModel>name}"
-                                            text="{mainModel>id}"/>
-                                    <!--<tnt:InfoLabel text="{mainModel>type}" renderMode="Narrow" colorScheme="{= ${mainModel>type} === 'PC' ? 1 : 2}"/>-->
-                                    <tnt:InfoLabel text="{mainModel>type}" renderMode="Narrow" colorScheme="{path:'mainModel>type', formatter: 'com.yedas.mm.demo.model.Formatter.getType'}"/>
-                                    <Text text="{mainModel>dimension}" />
-                                    <ObjectNumber
-                                        number="{
-                                            parts:[{path:'mainModel>price'},{path:'mainModel>unit'}],
-                                            type: 'sap.ui.model.type.Currency',
-                                            formatOptions: {showMeasure: false}
-                                        }"
-                                        unit="{mainModel>unit}" />
-                                    <ObjectStatus
-                                        text="{path:'mainModel>stock', formatter : 'com.yedas.mm.demo.model.Formatter.getStock'}"
-                                        icon="{= ${mainModel>stock} === 0 ? 'sap-icon://error' : 'sap-icon://sys-enter-2'}" 
-                                        state="{path:'mainModel>stock', formatter : 'com.yedas.mm.demo.model.Formatter.getStockState'}" />
-                                </cells>
-                            </ColumnListItem>
+                    <IconTabBar
+                        id="idIconTabBarMulti"
+                        expanded="true"
+                        class="sapUiResponsiveContentPadding" select="handleSelectIconTab">
+                    	<items>
+                            <IconTabFilter icon="sap-icon://hint" key="info" count="{mainModel>/tableCount}">
+                                <core:Fragment type="XML" fragmentName="com.yedas.mm.demo.fragments.TableFragment"/>
+                            </IconTabFilter>
+                            <IconTabFilter
+                                icon="sap-icon://attachment"
+                                key="attachments"
+                                count="3">
+                                <Text text="{mainModel>/AttachmentInfo}"/>
+                            </IconTabFilter>
+                            <IconTabFilter
+                                icon="sap-icon://notes"
+                                key="notes"
+                                count="12">
+                                <Text text="{mainModel>/NoteInfo}"/>
+                            </IconTabFilter>
                         </items>
-                   </Table>
-                </content>
-            </Panel>
+                    </IconTabBar> 
             <!--
                 <VBox id="vb_first">
                     <HBox id="hb_first">

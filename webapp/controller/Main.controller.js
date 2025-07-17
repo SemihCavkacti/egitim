@@ -13,46 +13,9 @@ function (Controller, MessageBox, MessageToast, Formatter, Dialog, ObjectIdentif
         formatter : Formatter,
         //İlk çalışacak fonksiyon
         onInit: function () {
+            this.config();
 
-            var data = {
-                    name    : "Semih",
-                    surName : "Çavkaçtı",
-                    city    : "İstanbul"   
-            }
-
-
-            var oData = {
-                products : [
-                        {id: "10001",   serialNumber : "111111" , type : "PC",   name : "Laptop", dimension : "30x30x3",  price : 1000, unit: "$", stock : 1},
-                        {id: "10002",   serialNumber : "111112", type : "PC",   name : "Mouse",  dimension : "10x5x3",   price : 48, unit: "$", stock : 0},
-                        {id: "10003",   serialNumber : "111113" , type : "PC",   name : "Keyboard", dimension: "30x20x5", price : 51, unit: "$", stock : 1},
-                        {id: "10004",   serialNumber : "111114" , type : "Cable", name : "HDMI",  dimension : "100x2x3",  price : 30, unit: "$", stock : 0},
-                        {id: "10005",   serialNumber : "111115", type : "Cable", name : "DP", dimension: "100x2x5",      price : 35, unit: "$", stock : 1},
-                        {id: "10006",   serialNumber : "111116" , type : "Cable", name : "DP", dimension: "100x2x5",      price : 35, unit: "$", stock : 0}
-                ],
-                //count : 6
-                criticalStockInfo : 'Information'
-            }
-
-            
-            var oModel = new sap.ui.model.json.JSONModel(oData);
-            this.getView().setModel(oModel, "mainModel");
-
-            var listCount = this.getView().getModel("mainModel").getProperty("/products").length;
- 
-            oModel.setProperty("/count", listCount);
-
-            if(listCount > 5) {
-                oModel.setProperty("/criticalStockInfo", "Information");
-            }
-            else if(listCount <= 5){
-                oModel.setProperty("/criticalStockInfo", "Error");
-            }
-
-
-            this.onAddPers("Default");
-
-            Formatter.getCurrency(oData);
+            this._oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
         },
         //View içerisindeki tasarımların henüz tarayıcıda yüklenmediği an
@@ -67,15 +30,54 @@ function (Controller, MessageBox, MessageToast, Formatter, Dialog, ObjectIdentif
         onExit : function(){
         },
 
+        //İlk Yükleme anında dataların oluşturulması
+        config : function(){
+            var data = {
+                    name    : "Semih",
+                    surName : "Çavkaçtı",
+                    city    : "İstanbul"   
+            }
+
+            var oData = {
+                products : [
+                        {id: "10001",   serialNumber : "111111" , type : "PC",   name : "Laptop", dimension : "30x30x3",  price : 1000, unit: "$", stock : 1},
+                        {id: "10002",   serialNumber : "111112", type : "PC",   name : "Mouse",  dimension : "10x5x3",   price : 48, unit: "$", stock : 0},
+                        {id: "10003",   serialNumber : "111113" , type : "PC",   name : "Keyboard", dimension: "30x20x5", price : 51, unit: "$", stock : 1},
+                        {id: "10004",   serialNumber : "111114" , type : "Cable", name : "HDMI",  dimension : "100x2x3",  price : 30, unit: "$", stock : 0},
+                        {id: "10005",   serialNumber : "111115", type : "Cable", name : "DP", dimension: "100x2x5",      price : 35, unit: "$", stock : 1},
+                        {id: "10006",   serialNumber : "111116" , type : "Cable", name : "DP", dimension: "100x2x5",      price : 35, unit: "$", stock : 0}
+                ],
+                //count : 6
+                criticalStockInfo : 'Information'
+            }
+
+            var oModel = new sap.ui.model.json.JSONModel(oData);
+            this.getView().setModel(oModel, "mainModel");
+
+            var listCount = this.getView().getModel("mainModel").getProperty("/products").length;
+ 
+            oModel.setProperty("/count", listCount);
+
+            if(listCount > 5) {
+                oModel.setProperty("/criticalStockInfo", "Information");
+            }
+            else if(listCount <= 5){
+                oModel.setProperty("/criticalStockInfo", "Error");
+            }
+        },
+
         //Tablodaki satıra tıklama fonksiyonu tetiklenir.
         onSelectProduct : function(oEvent){
              var oItem = oEvent.getParameter("listItem"); 
              var oContenxt = oItem.getBindingContext("mainModel");
              var data =  oContenxt.getObject();
 
-             var string = "Tıkladığınız" +data.id + " id olan ürün" + data.name +" ürünüdür."
+            this._oRouter.navTo("Detail",{id: data.id});
+            
 
-             MessageBox.show(string);
+             //var string = "Tıkladığınız" +data.id + " id olan ürün" + data.name +" ürünüdür."
+
+             //MessageBox.show(string);
         },
 
         onInputLiveChange : function(oEvent){
@@ -187,6 +189,26 @@ function (Controller, MessageBox, MessageToast, Formatter, Dialog, ObjectIdentif
                 this.getView().addDependent(this.oDialog);
             }
             this.oDialog.open();
+        },
+
+        //IconTab Bar nesnesi eventi
+        handleSelectIconTab : function(oEvent){
+            var selectedKey = oEvent.getParameter("selectedKey");
+            var oModel = this.getView().getModel("mainModel");
+            var tableItems = oModel.getProperty("/products");
+
+
+            switch (selectedKey) {
+                case "info":
+                    oModel.setProperty("/tableCount", tableItems.length);
+                break;
+                case "attachments":
+                    oModel.setProperty("/AttachmentInfo", "Attachment Fragment");
+                break;
+                case "notes":
+                    oModel.setProperty("/NoteInfo", "Note Fragment");
+                break;
+            }
         },
 
         /*
